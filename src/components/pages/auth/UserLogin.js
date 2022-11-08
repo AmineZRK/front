@@ -22,7 +22,7 @@ const UserLogin = () => {
         console.log("datalibghit",dat.data);
         window.localStorage.setItem('token', dat.data.token);
         window.localStorage.setItem('isAdmin',dat.data.isAdmin)
-        Navigate('/')
+        navigate('/')
         
         }
       )
@@ -31,7 +31,7 @@ const UserLogin = () => {
       document.getElementById('login-form').reset()
       setError({ status: true, msg: "Login Success", type: 'success' });
       
-      //navigate('/home')
+      // navigate('/home')
     } else {
       setError({ status: true, msg: "All Fields are Required", type: 'error' })
     }

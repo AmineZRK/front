@@ -1,0 +1,175 @@
+body {
+  background: hsla(210, 20%, 90%, 1);
+  padding:0;
+  margin: 0;
+  line-height: 1.6;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Open Sans', sans-serif;
+}
+
+h2, h5 {
+  margin: 0;
+}
+
+.cards {
+  display: flex;
+  justify-content: center;
+  align-content: space-between;
+  flex-wrap:wrap;
+}
+
+.card {
+  text-align: center;
+  background: #fff;
+  width: 24em;
+  border-radius: 0.6em;
+  margin: 1em;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 13px 27px -5px hsla(240, 30.1%, 28%, 0.25), 0 8px 16px -8px hsla(0, 0%, 0%, 0.3), 0 -6px 16px -6px hsla(0, 0%, 0%, 0.03);
+  transition: all ease 200ms;
+}
+
+.card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 13px 40px -5px hsla(240, 30.1%, 28%, 0.12), 0 8px 32px -8px hsla(0, 0%, 0%, 0.14), 0 -6px 32px -6px hsla(0, 0%, 0%, 0.02);
+}
+
+.card img {
+  width: 100%;
+  object-fit: cover;
+}
+
+.card h2 {
+  color: #222;
+  margin-top: -0.2em;
+  line-height: 1.4;
+  font-size: 1.3em;
+  font-weight: 500;
+  font-family: 'Montserrat', sans-serif;
+  transition: all ease-in 100ms;
+}
+
+.card p {
+  color: #777;
+}
+
+.card h5 {
+  color: #bbb;
+  font-weight: 700;
+  font-size: 0.7em;
+  letter-spacing: 0.04em;
+  margin: 1.4em 0 0 0;
+  text-transform: uppercase;
+}
+
+.card-body {
+  padding: 1.2em;
+}
+.delete{
+  border: 2px solid #fff;
+  border-radius: 3px;
+  background-color: red;
+  color: #fff;
+  cursor: pointer;
+
+}
+.update{
+  border: 2px solid #fff;
+  border-radius: 3px;
+  background-color: orange;
+  color: #fff;
+  cursor: pointer;
+
+}
+
+
+
+
+/* CSS CREATE BOOK */
+#registerContainer {
+  margin-top: 3em;
+  padding-top: 2em;
+  /* background-image: url(../assets/panels.svg); */
+  background-size: cover;
+}
+
+.rowContainer {
+  margin-top: 1em;
+  margin-bottom: 7em;
+}
+.registerCardPage {
+  margin: auto;
+  margin-top: 3em;
+  margin-bottom: 5em;
+  width: 50em;
+  min-width: 20em !important;
+}
+
+#noanim-tab-example-tab-su {
+  background: white !important;
+}
+
+a[title="Tech"]:hover {
+  background-color: rgba(43, 58, 117, 0.9);
+}
+a.nav-item.nav-link.active {
+  font-weight: 600;
+}
+
+.aLink {
+  text-decoration: underline;
+  margin-left: 0.2em;
+}
+
+.boldFont {
+  font-weight: bold;
+}
+
+.registerCard {
+  margin: 2em !important;
+}
+
+.card-header-tabs {
+  margin-bottom: 0;
+}
+
+#linkText {
+  margin-bottom: 1em;
+}
+
+nav.nav.card-header-tabs.nav-tabs {
+  margin-bottom: 0.5em;
+}
+
+#security {
+  margin-left: 0.5em;
+  border: 1px solid #ced4da;
+  background-color: #fff;
+}
+
+div#securitySection {
+  margin-top: 1.5em;
+  margin-bottom: 1em;
+}
+
+#terms {
+  margin-left: 0px;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+}
+
+@media (max-width: 960px) {
+  #registerContainer {
+    background-image: none;
+    background-size: cover;
+  }
+}
+
+@media (max-width: 768px) {
+  #registerContainer {
+    background-image: none;
+    background-size: cover;
+  }
+}

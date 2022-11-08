@@ -1,30 +1,35 @@
+
 import { Grid } from "@mui/material";
 import "../pages/styles.css";
 import axios from "axios";
-import Card from "../pages/Card";
+import CardUser from "../pages/CardUser";
 import Logo from '../../images/logo.png'
 import React, { Component } from "react";
 import {NavLink} from 'react-router-dom';
 import ReactLoading from "react-loading";
 
-export default class Home extends Component {
+export default class AllUsers extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      books: [],
+      users: [],
       isloading: true
     };
   }
 
   async componentDidMount() {
-    await axios.get(`http://localhost:5000/api/v1/all-book`).then((res) => {
-      const books = res;
-      this.setState({ books, isloading: false });
+    await axios.get(`http://localhost:5000/api/v1/all-user`,{
+      headers:{
+        Authorization: `Bearer ${window.localStorage.getItem('token')}`
+      }
+    }).then((res) => {
+      const users = res;
+      this.setState({ users, isloading: false });
     });
   }
 
   render() {
-    let res = this.state.books;
+    let res = this.state.users;
     let { isloading } = this.state;
     return (
       <>
@@ -33,11 +38,7 @@ export default class Home extends Component {
            <br />
            <div style={{display:"flex", flexDirection:"column", justifyContent:"space-between", alignItems:"center"}}>
             <img style={{width:"290px", heigth:"290px"}} src={Logo} alt="Logo" / >
-            {window.localStorage.getItem('isAdmin')==="true"?
-            <h1><NavLink to='/create-book'style={{textAlign:"center", color:"orange", textDecoration:"none", fontSize:"35px", fontWeight:"bold"}} >CREATE BOOK</NavLink></h1>
-            :""
-            }
-            
+            <h1><NavLink to='/create-user'style={{textAlign:"center", color:"orange", textDecoration:"none", fontSize:"35px", fontWeight:"bold"}} >CREATE USERS</NavLink></h1>
             {/* <h1 style={{textAlign:"center"}}>ALL BOOKS</h1> */}
            </div>
             <hr />
@@ -50,21 +51,17 @@ export default class Home extends Component {
             <div className="cards">
               {res?.data?.data?.map((x) => {
                 return (
-                  <Card
-                    id = {x._id}
-                    imageURL={x.imageURL}
-                    title={x.title}
-                    categories={x.categories}
-                    description={x.description}
-                    price={x.price}
-                    author={x.author}
-                    createdAt = {x.createdAt}
+                  <CardUser
+                    name={x.name}
+                    email={x.email}
+                    phone={x.phone}
+                    role={x.role}
                   />
                 );
               })}
             </div>
         )}
       </>
-    );
+    ) ;
   }
 }

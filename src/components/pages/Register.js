@@ -45,14 +45,14 @@ const Register = () => {
     e.preventDefault();
 
     var formData = new FormData();
-    formData.append("photo", file);
+    formData.append("image", file);
     formData.append("titre", titre);
-    formData.append("auteur", auteur);
+    formData.append("author", auteur);
     formData.append("categorie", categorie);
     formData.append("description", description);
-    formData.append("prix", prix);
+    formData.append("price", prix);
     formData.append("isbn", isbn);
-    formData.append("np", np);
+    formData.append("nbr_pages", np);
 
     const config = {
       headers: {
@@ -60,13 +60,13 @@ const Register = () => {
       }
     }
 
-    const res = await axios.post("/register", formData, config);
+    //const res = await axios.post("/register", formData, config);
 
-    if (res.data.status === 401 || !res.data) {
-      console.log("errror")
-    } else {
-      history("/")
-    }
+    // if (res.data.status === 401 || !res.data) {
+    //   console.log("errror")
+    // } else {
+    //   history("/")
+    // }
   }
 
   return (
