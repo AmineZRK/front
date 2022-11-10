@@ -15,7 +15,7 @@ import SingleUser from "./components/pages/SingleUser";
 import CreateBook from "./components/pages/CreateBook";
 import SingleBook from "./components/pages/SingleBook";
 import Layout from "./components/pages/Layout";
-
+import Test from "./components/pages/Test";
 function App() {
   return (
     <div className ="App">
@@ -37,6 +37,7 @@ function App() {
           <Route path="/all-user" element={<AllUsers />} />
           <Route path="/single-user/:id" element={<SingleUser />} />
           <Route path="/create-user" element={<CreateUser />} />
+          <Route path="/test" element={<Test />}/>
           <Route path="*" element={<h1>Error 404 Page not found !!</h1>} />
         </Routes>
       </BrowserRouter>

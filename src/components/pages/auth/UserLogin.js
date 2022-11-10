@@ -18,18 +18,23 @@ const UserLogin = () => {
     }
     if (actualData.email && actualData.password) {
       axios.post('http://localhost:5000/api/v1/login',actualData).then(
-        (dat)=>{console.log("dataglobal",dat);
-        console.log("datalibghit",dat.data);
-        window.localStorage.setItem('token', dat.data.token);
+        (dat)=>{
+          window.localStorage.setItem('token', dat.data.token);
         window.localStorage.setItem('isAdmin',dat.data.isAdmin)
+          if (window.localStorage.getItem('token')){
+            console.log("dataglobal",dat);
+        console.log("datalibghit",dat.data);
+        
         navigate('/')
+        document.getElementById('login-form').reset()
+        setError({ status: true, msg: "Login Success", type: 'success' });
+          }else{setError({ status: true, msg: "error", type: 'error' });}
+        
         
         }
       )
-      
 
-      document.getElementById('login-form').reset()
-      setError({ status: true, msg: "Login Success", type: 'success' });
+      
       
       // navigate('/home')
     } else {
