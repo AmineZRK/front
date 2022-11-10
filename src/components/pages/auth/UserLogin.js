@@ -19,12 +19,12 @@ const UserLogin = () => {
     if (actualData.email && actualData.password) {
       axios.post('http://localhost:5000/api/v1/login',actualData).then(
         (dat)=>{
-          window.localStorage.setItem('token', dat.data.token);
-        window.localStorage.setItem('isAdmin',dat.data.isAdmin)
-          if (window.localStorage.getItem('token')){
+          console.log(error.response)
+          if (dat){
             console.log("dataglobal",dat);
         console.log("datalibghit",dat.data);
-        
+        window.localStorage.setItem('token', dat.data.token);
+        window.localStorage.setItem('isAdmin',dat.data.isAdmin)
         navigate('/')
         document.getElementById('login-form').reset()
         setError({ status: true, msg: "Login Success", type: 'success' });
@@ -32,7 +32,24 @@ const UserLogin = () => {
         
         
         }
-      )
+      ).catch(function(error){
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          setError({ status: true, msg: error.response.data.message , type: 'error' });
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        } else if (error.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+          // http.ClientRequest in node.js
+          console.log(error.request);
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log('Error', error.message);
+        }
+      })
 
       
       
