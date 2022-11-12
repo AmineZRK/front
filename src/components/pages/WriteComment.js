@@ -4,7 +4,8 @@ import axios from "axios";
 import { TextField, FormControlLabel, Checkbox, Button, Box, Alert } from '@mui/material';
 
 import "bootstrap/dist/css/bootstrap.min.css";
-const WriteComment= () => {
+const WriteComment= (props) => {
+  const[id,setId]=useState(props.idBook)
     const [error, setError] = useState({
       status: false,
       msg: "",
@@ -12,15 +13,17 @@ const WriteComment= () => {
     })
     // const navigate = useNavigate();
     const handleSubmit = (e) => {
+      console.log(id);
       e.preventDefault();
       const data = new FormData(e.currentTarget);
       const actualData = {
+        bookId:id,
         message: data.get('message'),
         grade: data.get('grade'),
        
       }
       if (actualData.message && actualData.grade !== null) {
-          axios.post('http://localhost:5000/api/v1/add-review/',actualData,
+          axios.put('http://localhost:5000/api/v1/add-review/',actualData,
           {
               headers:{
                   Authorization: `Bearer ${window.localStorage.getItem('token')}`
@@ -30,6 +33,7 @@ const WriteComment= () => {
           console.log(actualData);
           document.getElementById('registration-form').reset()
           setError({ status: true, msg: "Create Review Successful", type: 'success' })
+          window.location.reload(false)
           // navigate('/')
        
       } else {

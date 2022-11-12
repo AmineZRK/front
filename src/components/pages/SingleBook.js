@@ -100,7 +100,9 @@ class SingleBook extends Component {
                 </div>
                 <div>
                   {/* <h1 className="commenter">Commenter</h1> */}
-                  <WriteComments />
+                  <WriteComments 
+                    idBook={x._id}
+                  />
                 </div>
               </div>
           </div>

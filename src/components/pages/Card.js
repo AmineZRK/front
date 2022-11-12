@@ -42,7 +42,6 @@ export default class Card extends Component {
             <button type="submit" className="delete" onClick={()=>dltBook(this.props.id)}>
               Delete
             </button>
-
             <button type="submit" className="update" onClick={updateBookData}>
             Update
             </button>

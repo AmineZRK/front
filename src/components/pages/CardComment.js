@@ -8,7 +8,6 @@ import axios from "axios";
 const dltReview = async (id,idbook) => {
   const res = await axios.put(`http://localhost:5000/api/v1/delete-review/${idbook}&${id}`, {
       headers: {
-          "Content-Type": "application/json",
           Authorization: `Bearer ${window.localStorage.getItem('token')}`
       }
   });
@@ -44,13 +43,12 @@ export default class CardComment extends Component {
           <h2>{this.props.description}</h2>
           <p>{this.props.grade}</p>
           <p style={{display:"flex", gap:"10px", justifyContent:"center"}}> 
-            <button type="submit" className="delete" onClick={()=>dltReview(this.props.idrev,this.props.idBook)}>
+          {window.localStorage.getItem('isAdmin')=='true'?<button type="submit" className="delete" onClick={()=>dltReview(this.props.idrev,this.props.idBook)}>
               Delete
-            </button>
+            </button>:""}
+            
 
-            <button type="submit" className="update" onClick={updateCommentData}>
-            Update
-            </button>
+            
           </p>
 
         </div>
