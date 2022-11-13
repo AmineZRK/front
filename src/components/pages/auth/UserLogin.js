@@ -22,12 +22,13 @@ const UserLogin = () => {
           console.log(error.response)
           if (dat){
             console.log("dataglobal",dat);
-        console.log("datalibghit",dat.data);
-        window.localStorage.setItem('token', dat.data.token);
-        window.localStorage.setItem('isAdmin',dat.data.isAdmin)
-        navigate('/')
-        document.getElementById('login-form').reset()
-        setError({ status: true, msg: "Login Success", type: 'success' });
+            console.log("datalibghit",dat.data);
+            window.localStorage.setItem('token', dat.data.token);
+            window.localStorage.setItem('isAdmin',dat.data.isAdmin)
+            window.localStorage.setItem('userId',dat.data.userId)
+            navigate('/')
+            document.getElementById('login-form').reset()
+            setError({ status: true, msg: "Login Success", type: 'success' });
           }else{setError({ status: true, msg: "error", type: 'error' });}
         
         

@@ -6,19 +6,25 @@ import axios from "axios";
 
 //Function pour supprimer à gérer
 const dltReview = async (id,idbook) => {
-  const res = await axios.put(`http://localhost:5000/api/v1/delete-review/${idbook}&${id}`, {
-      headers: {
-          Authorization: `Bearer ${window.localStorage.getItem('token')}`
-      }
-  });
+//   const res = await axios.put(`http://localhost:5000/api/v1/delete-review/${idbook}&${id}`, {
+//       headers: {
+//           Authorization: `Bearer ${window.localStorage.getItem('token')}`
+//       }
+//   });
 
-  if (res.data.status === 401 || !res.data) {
-      console.log("errror")
-  } else {
-      console.log("book delete");
-  }
+//   if (res.data.status === 401 || !res.data) {
+//       console.log("errror")
+//   } else {
+//       console.log("book delete");
+//   }
+const res = await fetch(`http://localhost:5000/api/v1/delete-review/${idbook}&${id}`, {
+    method: "PUT",
+    headers:{Authorization: `Bearer ${window.localStorage.getItem('token')}`}
+}).then((res) => res.json());
+alert(JSON.stringify(`${res.message}, status: ${res.status}`));
+window.location.reload(false)
+ }
 
-}
 
 //Function pour modifier à gérer
 const updateCommentData = async (e) => {}
@@ -43,12 +49,11 @@ export default class CardComment extends Component {
           <h2>{this.props.description}</h2>
           <p>{this.props.grade}</p>
           <p style={{display:"flex", gap:"10px", justifyContent:"center"}}> 
-          {window.localStorage.getItem('isAdmin')=='true'?<button type="submit" className="delete" onClick={()=>dltReview(this.props.idrev,this.props.idBook)}>
+          {window.localStorage.getItem('isAdmin')=='true'||this.props.UserId==window.localStorage.getItem('userId')?<button type="submit" className="delete" onClick={()=>dltReview(this.props.idrev,this.props.idBook)}>
               Delete
             </button>:""}
             
-
-            
+                    
           </p>
 
         </div>

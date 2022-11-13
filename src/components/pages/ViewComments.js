@@ -1,10 +1,9 @@
 import "../pages/styles.css";
-import axios from "axios";
+// import axios from "axios";
 import CardComment from "../pages/CardComment";
 // import Logo from '../../images/logo.png';
 import React, { Component } from "react";
 import ReactLoading from "react-loading";
-import { textAlign } from "@mui/system";
 
 
 export default class AllUsers extends Component {

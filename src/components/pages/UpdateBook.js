@@ -1,12 +1,13 @@
-import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Container, Card, Button, Form, Tab, Tabs, Row } from "react-bootstrap";
 import "../pages/styles.css";
 import { useForm } from "react-hook-form";
+import ReactLoading from "react-loading";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import "bootstrap/dist/css/bootstrap.min.css";
-import axios from "../pages/axiosInstance";
+import axios from "axios";
 const FormData = require('form-data');
 const schema = yup.object().shape({
   title: yup
@@ -25,6 +26,8 @@ const schema = yup.object().shape({
 
 const UpdateBook = () => {
   //const{register,handleSubmit}=useForm();
+  let location=useLocation();
+  console.log(location.state.id)
   const {
     register,
     handleSubmit,
@@ -36,7 +39,14 @@ const UpdateBook = () => {
 //const [role, setRole] = useState("tech");
   const [resStatus, setResStatus] = useState("");
   const navigate = useNavigate();
-  const [form,setForm]=useState();
+  const [myData,setMyData]=useState();
+  useEffect(async()=>{
+   const my=await axios.get(`http://localhost:5000/api/v1/single-book/${location.state.id}`)
+   console.log(my);
+   setMyData(my.data.data)
+  },[])
+    
+  console.log(myData)
   const onSubmitHandler = async (data) => {
     //data.preventDefault();
     //const dat = new FormData(data.currentTarget)
@@ -75,12 +85,15 @@ const UpdateBook = () => {
   //   image:img
   // }
   //console.log(myData);
-  const res = await fetch("http://localhost:5000/api/v1/create-book", {
-    method: "POST",
+  const res = await fetch(`http://localhost:5000/api/v1/update-book/${location.state.id}`, {
+    method: "PUT",
     body: form,
     headers:{Authorization: `Bearer ${window.localStorage.getItem('token')}`}
-}).then((res) => res.json());
-alert(JSON.stringify(`${res.message}, status: ${res.status}`));
+  }).then((res) => res.json());
+    alert(JSON.stringify(`${res.message}, status: ${res.status}`));
+    navigate('/')
+    window.location.reload(false);
+
   
   
     //console.log('image',form.get('image'));
@@ -107,119 +120,127 @@ alert(JSON.stringify(`${res.message}, status: ${res.status}`));
   console.log(resStatus);
 
   return (
-    <>
-       <h1 style={{textAlign:"center", color:"orange", textDecoration:"none", fontSize:"35px", fontWeight:"bold"}}>CREATE BOOK</h1>
-      <Container>
-        <Row className="justify-content-md-center">
-          <Card className="registerCardPage">
-            <Card.Header as="h5" className="registerCardHeader">
-              Reserver aux administrateurs
-            </Card.Header>
-            <Card.Body>
-
-              {/* Title */}
-              <Form onSubmit={handleSubmit(onSubmitHandler)}>
-                <Form.Group>
-                  <Form.Label>Titre</Form.Label>
-                  <input
-                  {...register("title")}
-                  name="title"
-                    type="text"
-                    
-                  />
-                 
-                </Form.Group>
-
-                {/* Author */}
-                <Form.Group>
-                  <Form.Label>Auteur</Form.Label>
-                  <input
-                    {...register("author")}
-                    type="text"
-                    
-                  />
-                 
-                </Form.Group>
-
-                {/* Categories */}
-                <Form.Group>
-                  <Form.Label>Catégories</Form.Label>
-                  <input
-                    {...register("categories")}
-                    type="text"
-                    
-                  />
-                  
-                </Form.Group>
-
-                {/* Description */}
-                <Form.Group>
-                  <Form.Label>Description</Form.Label>
-                  <input
-                    {...register("description")}
-                    type="text"
-                    
-                  />
-                  
-                </Form.Group>
-
-                {/* Prix */}
-                <Form.Group>
-                  <Form.Label>Prix</Form.Label>
-                  <input
-                    {...register("price")}
-                    type="text"
-                    
-                  />
-                  
-                </Form.Group>
-
-                  {/* Isbn */}
-                  <Form.Group>
-                  <Form.Label>Isbn</Form.Label>
-                  <input
-                    {...register("isbn")}
-                    type="text"
-                    className={`form-control ${
-                      errors.isbn ? "is-invalid" : ""
-                    }`}
-                  />
-                  
-                </Form.Group>
-
-                  {/* Nbre de pages */}
-                  <Form.Group>
-                  <Form.Label>Nombre de pages</Form.Label>
-                  <input
-                    {...register("nbr_pages")}
-                    type="text"
-                  />
-                  
-                </Form.Group>
-
-                  {/* Image */}
-                  <Form.Group>
-                  <Form.Label>Image</Form.Label>
-                  <input
-                    {...register("image")}
-                    type="file"
-                    id="image"
     
-                  />
-                </Form.Group>
+    <>
+        <h1 style={{textAlign:"center", color:"orange", textDecoration:"none", fontSize:"35px", fontWeight:"bold"}}>UPDATE BOOK</h1>
+        {myData!==null?(
+          <Container>
+          <Row className="justify-content-md-center">
+            <Card className="registerCardPage">
+              <Card.Header as="h5" className="registerCardHeader">
+                Reserver aux administrateurs
+              </Card.Header>
+              <Card.Body>
 
-                <br />
-                <Button className="registerButton" type="submit" style={{padding:"10px", width:"1263px"}}>
-                  Create Book
-                </Button>
-              </Form>
-            
-            </Card.Body>
-          </Card>
-        </Row>
-      </Container>
+                {/* Title */}
+                <Form onSubmit={handleSubmit(onSubmitHandler)}>
+                  <Form.Group>
+                    <Form.Label>Titre</Form.Label>
+                    <input
+                    {...register("title")}
+                    defaultValue={myData?.title}
+                    name="title"
+                    type="text"
+                    className={`form-control`}
+                    />
+                  </Form.Group>
+
+                  {/* Author */}
+                  <Form.Group>
+                    <Form.Label>Auteur</Form.Label>
+                    <input
+                      {...register("author")}
+                      defaultValue={myData?.author}
+                      type="text"
+                      className={`form-control`}
+                    />
+                  </Form.Group>
+
+                  {/* Categories */}
+                  <Form.Group>
+                    <Form.Label>Catégories</Form.Label>
+                    <input
+                      defaultValue={myData?.categories}
+                      {...register("categories")}
+                      type="text"
+                      className={`form-control`}
+                    />  
+                  </Form.Group>
+
+                  {/* Description */}
+                  <Form.Group>
+                    <Form.Label>Description</Form.Label>
+                    <input
+                      defaultValue={myData?.description}
+                      {...register("description")}
+                      type="text"
+                      className={`form-control`}
+                    />
+                  </Form.Group>
+
+                  {/* Prix */}
+                  <Form.Group>
+                    <Form.Label>Prix</Form.Label>
+                    <input
+                      defaultValue={myData?.price}
+                      {...register("price")}
+                      type="text"
+                      className={`form-control`}
+                    />
+                  </Form.Group>
+
+                    {/* Isbn */}
+                    <Form.Group>
+                      <Form.Label>Isbn</Form.Label>
+                      <input
+                        defaultValue={myData?.isbn}
+                        {...register("isbn")}
+                        type="text"
+                        className={`form-control`}
+                      />
+                    </Form.Group>
+
+                    {/* Nbre de pages */}
+                    <Form.Group>
+                      <Form.Label>Nombre de pages</Form.Label>
+                      <input
+                          defaultValue={myData?.nbr_pages}
+                          {...register("nbr_pages")}
+                          type="text"
+                          className={`form-control`}
+                      />
+                    </Form.Group>
+
+                    {/* Image */}
+                    <Form.Group>
+                      <Form.Label>Image</Form.Label>
+                      <input
+                        {...register("image")}
+                        type="file"
+                        id="image"
+                        className={`form-control`}
+        
+                      />
+                    </Form.Group>
+
+                    <br />
+                    <br />
+                    <Button className="btnCreateBook" type="submit">
+                      Update Book
+                    </Button>
+                    <br />
+                    <br />
+                    <br />
+                </Form>
+              
+              </Card.Body>
+            </Card>
+          </Row>
+        </Container>
+        ):(<ReactLoading type={"bars"} color="#021155" />
+      )}
     </>
   );
 };
 
-export default CreateBook;
+export default UpdateBook;

@@ -11,15 +11,15 @@ const WriteComment= (props) => {
       msg: "",
       type: ""
     })
+    
     // const navigate = useNavigate();
     const handleSubmit = (e) => {
-      console.log(id);
       e.preventDefault();
       const data = new FormData(e.currentTarget);
       const actualData = {
         bookId:id,
-        message: data.get('message'),
-        grade: data.get('grade'),
+        message:data.get('message'),
+        grade:data.get('grade'),
        
       }
       if (actualData.message && actualData.grade !== null) {
@@ -33,8 +33,8 @@ const WriteComment= (props) => {
           console.log(actualData);
           document.getElementById('registration-form').reset()
           setError({ status: true, msg: "Create Review Successful", type: 'success' })
-          window.location.reload(false)
-          // navigate('/')
+          //Pour actualiser la page automatiquement après la suppression
+          window.location.reload(false);
        
       } else {
         setError({ status: true, msg: "All Fields are Required", type: 'error' })
@@ -65,9 +65,15 @@ const WriteComment= (props) => {
                   />
 
                 </div>
-                <button className="registerButton" type="submit" style={{padding:"5px"}}>
-                Add a comment
+                <button className="registerButton" type="submit">
+                  Add a comment
                 </button>
+                <br />
+                <br />
+                <br />
+                {/* <div  className="br">
+                 {props.idBook}
+                </div> */}
                 <div className="br"></div>
               </div>
             {/* <Box textAlign='center'>
@@ -79,4 +85,3 @@ const WriteComment= (props) => {
   };
   
   export default WriteComment;
-  

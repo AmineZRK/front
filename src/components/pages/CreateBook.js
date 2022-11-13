@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import "bootstrap/dist/css/bootstrap.min.css";
-import axios from "../pages/axiosInstance";
+// import axios from "../pages/axiosInstance";
 const FormData = require('form-data');
 const schema = yup.object().shape({
   title: yup
@@ -54,33 +54,16 @@ const CreateBook = () => {
     form.append("isbn", data.isbn)
     form.append("nbr_pages", data.nbr_pages)
     form.append("image",data.image[0])
-    // const myform = new FormData();
-    // myform.append("image",file)
-    //console.log('mydata',form);
-  //console.log('1::::::!',file)
-  // const img={
-  //   fieldname: 'image',
-  //   originalname: file.name,
-  //   encoding: '7bit',
-  //   mimetype: file.type
-  // }
-  // const myData = {
-  //   title:dat.get('title'),
-  //   author:dat.get('author'),
-  //   categories:dat.get('categories'),
-  //   description:dat.get('description'),
-  //   price:dat.get('price'),
-  //   isbn:dat.get('isbn'),
-  //   nbr_pages:dat.get('nbr_pages'),
-  //   image:img
-  // }
+  
   //console.log(myData);
   const res = await fetch("http://localhost:5000/api/v1/create-book", {
     method: "POST",
     body: form,
     headers:{Authorization: `Bearer ${window.localStorage.getItem('token')}`}
 }).then((res) => res.json());
-alert(JSON.stringify(`${res.message}, status: ${res.status}`));
+    alert(JSON.stringify(`${res.message}, status: ${res.status}`));
+    //Pour actualiser la page automatiquement après la suppression
+    window.location.reload(false);
   
   
     //console.log('image',form.get('image'));
@@ -125,6 +108,7 @@ alert(JSON.stringify(`${res.message}, status: ${res.status}`));
                   {...register("title")}
                   name="title"
                     type="text"
+                    className={`form-control`}
                     
                   />
                  
@@ -136,6 +120,7 @@ alert(JSON.stringify(`${res.message}, status: ${res.status}`));
                   <input
                     {...register("author")}
                     type="text"
+                    className={`form-control`}
                     
                   />
                  
@@ -147,6 +132,7 @@ alert(JSON.stringify(`${res.message}, status: ${res.status}`));
                   <input
                     {...register("categories")}
                     type="text"
+                    className={`form-control`}
                     
                   />
                   
@@ -158,6 +144,7 @@ alert(JSON.stringify(`${res.message}, status: ${res.status}`));
                   <input
                     {...register("description")}
                     type="text"
+                    className={`form-control`}
                     
                   />
                   
@@ -169,6 +156,7 @@ alert(JSON.stringify(`${res.message}, status: ${res.status}`));
                   <input
                     {...register("price")}
                     type="text"
+                    className={`form-control`}
                     
                   />
                   
@@ -180,9 +168,10 @@ alert(JSON.stringify(`${res.message}, status: ${res.status}`));
                   <input
                     {...register("isbn")}
                     type="text"
-                    className={`form-control ${
-                      errors.isbn ? "is-invalid" : ""
-                    }`}
+                    className={`form-control`}
+                    // className={`form-control ${
+                    //   errors.isbn ? "is-invalid" : ""
+                    // }`}
                   />
                   
                 </Form.Group>
@@ -193,6 +182,7 @@ alert(JSON.stringify(`${res.message}, status: ${res.status}`));
                   <input
                     {...register("nbr_pages")}
                     type="text"
+                    className={`form-control`}
                   />
                   
                 </Form.Group>
@@ -204,14 +194,18 @@ alert(JSON.stringify(`${res.message}, status: ${res.status}`));
                     {...register("image")}
                     type="file"
                     id="image"
+                    className={`form-control`}
     
                   />
                 </Form.Group>
-
                 <br />
-                <Button className="registerButton" type="submit" style={{padding:"10px", width:"1263px"}}>
+                <br />
+                <Button className="btnCreateBook" type="submit">
                   Create Book
                 </Button>
+                <br />
+                <br />
+                <br />
               </Form>
             
             </Card.Body>
